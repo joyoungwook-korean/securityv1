@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="header">
+
+    <header class="p-3 mb-3 border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" style="margin-right: 230px">
+                    <li class="nav-link px-2 link-secondary"><a href="/" class="nav-link px-2 link-dark">home</a></li>
+                    <li class="nav-link px-2 link-secondary"><a href="/" class="nav-link px-2 link-dark">user</a></li>
+                    <li class="nav-link px-2 link-secondary"><a href="/" class="nav-link px-2 link-dark">manager</a></li>
+                    <li class="nav-link px-2 link-secondary"><a href="/" class="nav-link px-2 link-dark">admin</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" style="float: right">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+                <div class="col-md-3 text-end" style="float: right">
+                    <button type="button" class="btn btn-outline-primary me-2" ><a href="/loginform">Login</a></button>
+                    <button type="button" class="btn btn-primary">Sign-up</button>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+</div>
+
+</html>

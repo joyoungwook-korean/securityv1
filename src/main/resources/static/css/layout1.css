@@ -1,0 +1,56 @@
+html{
+    position: relative;
+    min-height: 100%;
+    margin:  0px;
+}
+
+body{
+    min-height: 100%;
+}
+
+.footer{
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.content{
+    margin-bottom: 100px;
+    margin-top: 50px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.form-floating>.form-control{
+    padding: 1rem .75rem;
+}
+.form-floating>.form-control, .form-floating>.form-select {
+    height: calc(3.5rem + 2px);
+    line-height: 1.25;
+}
+
+
+.loginformz{
+    margin: 0 auto;
+    width: 500px;
+    height: 315px;
+    text-align: center;
+}
+.loginformz>h1{
+    margin-bottom: 20px;
+    padding-bottom: 30px;
+
+}
+
+.loginformz>div{
+
+    margin-top: 30px;
+    margin-bottom: 15px;
+
+}
+

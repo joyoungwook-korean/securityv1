@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndexController {
 
     @GetMapping("/")
-    public @ResponseBody String aaa(){
-        return "Hello Main";
+    public String indexPage(){
+        return "index";
     }
 
     @GetMapping("/admin")
@@ -25,14 +25,14 @@ public class IndexController {
         return "Hello user";
     }
 
-    @GetMapping("/create")
-    public @ResponseBody String create(){
-        return "Hello create";
+    @GetMapping("/login")
+    public String login(){
+        return "loginform";
     }
 
-    @GetMapping("/createProc")
-    public @ResponseBody String createProc(){
-        return "create success";
+    @GetMapping("/loginform")
+    public String loginForm(){
+        return "loginform";
     }
 
 }
