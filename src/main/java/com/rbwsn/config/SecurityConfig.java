@@ -1,9 +1,12 @@
 package com.rbwsn.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity // Spring Security Config
@@ -17,6 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").access("hasRole('ROLE_MANAGER')")
                 .anyRequest().permitAll() // IF　NOT全部PERMIT
                 .and()
-                .formLogin().loginPage("/login"); //loginPageで移動
+                .formLogin().loginPage("/loginform"); //loginPageで移動
     }
+
+    @Bean
+    public PasswordEncoder  passwordEncoder(){
+        return new BCryptPasswordEncoder();
+  }
 }

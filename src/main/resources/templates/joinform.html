@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/content1}">
+
+<th:block layout:fragment="css">
+    <style>
+        .fieldError{
+            color: red;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+           var errorMessage = [[${errorMessage}]];
+           if(errorMessage != null){
+               alert(errorMessage)
+           }
+        });
+    </script>
+</th:block>
+
+
+<div layout:fragment="content">
+    <!--userFormDtoの形式でfieldを作ります。-->
+    <form class="loginformz" action="/joinform" role="form" method="post" th:object="${userFormDto}" >　
+        <h1 class="border-bottom"> 登録ページ</h1>
+        <div class="form-floating">
+            <input type="text" th:field="*{username}" class="form-control" placeholder="Name">
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError"></p>
+
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control" th:field="*{email}" placeholder="Email address">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
+
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" th:field="*{password}" placeholder="password">
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
+        </div>
+
+        <button class="btn btn-primary" type="submit" >登録</button>
+    </form>
+
+</div>
+
+</html>
