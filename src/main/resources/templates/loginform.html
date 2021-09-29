@@ -4,19 +4,21 @@
       layout:decorate="~{layouts/content1}">
 
 
+
 <div layout:fragment="content">
 
-    <form class="loginformz">
+
+    <form class="loginformz" action="/login" method="post" >
         <h1 class="border-bottom"> Please sign in</h1>
         <div class="form-floating">
             <input type="email" class="form-control" name="email" placeholder="Email address">
-
         </div>
         <div class="form-floating">
             <input type="password" class="form-control" name="password" placeholder="password">
         </div>
+        <p th:if="${param.error}" style="color: red">emailを見つけられないでしたり、パスワードが正しくありません。</p>
 
-        <button class="btn btn-primary" type="button">Login</button>
+        <button class="btn btn-primary" type="submit">Login</button>
         <button class="btn btn-info" type="button" onclick="location.href='/joinform'">Sign up</button>
     </form>
 

@@ -27,6 +27,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role; // USER, ADMIN, MEMBER
 
+    private Timestamp loginDate;
+
     @CreationTimestamp
     private Timestamp createDate;
 

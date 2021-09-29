@@ -35,7 +35,6 @@
         <div class="form-floating">
             <input type="email" class="form-control" th:field="*{email}" placeholder="Email address">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
-
         </div>
         <div class="form-floating">
             <input type="password" class="form-control" th:field="*{password}" placeholder="password">

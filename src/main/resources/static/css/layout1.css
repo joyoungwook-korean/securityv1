@@ -1,10 +1,10 @@
-html{
+html {
     position: relative;
     min-height: 100%;
-    margin:  0px;
+    margin: 0px;
 }
 
-body{
+body {
     min-height: 100%;
 }
 a{
@@ -15,7 +15,7 @@ a{
     overflow: auto;
 }
 
-.footer{
+.footer {
 
     position: absolute;
     left: 0;
@@ -26,34 +26,49 @@ a{
     text-align: center;
 }
 
-.content{
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+
+.content {
 
     margin-top: 100px;
 
 }
 
-.form-floating>.form-control{
+.form-floating > .form-control {
     padding: 1rem .75rem;
 }
-.form-floating>.form-control, .form-floating>.form-select {
+
+.form-floating > .form-control, .form-floating > .form-select {
     height: calc(3.5rem + 2px);
     line-height: 1.25;
 }
 
 
-.loginformz{
+.loginformz {
     margin: 0 auto;
-    width: 500px;
-    height: 315px;
+    width: 700px;
+    height: 500px;
     text-align: center;
 }
-.loginformz>h1{
+
+.loginformz > h1 {
     margin-bottom: 20px;
     padding-bottom: 30px;
 
 }
 
-.loginformz>div{
+.loginformz > div {
 
     margin-top: 30px;
     margin-bottom: 15px;

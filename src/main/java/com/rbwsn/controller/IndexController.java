@@ -4,7 +4,9 @@ import com.rbwsn.dto.UserFormDto;
 import com.rbwsn.entity.User;
 import com.rbwsn.repository.UserRepository;
 import com.rbwsn.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,9 +53,11 @@ public class IndexController {
         return "createuser";
     }
 
+
     @GetMapping("/loginform")
-    public String loginForm(){
-        return "loginform";
+    public String loginForm(Model model){
+        return "/loginform";
+
     }
 
 
