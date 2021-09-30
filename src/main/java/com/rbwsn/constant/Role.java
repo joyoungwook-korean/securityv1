@@ -1,5 +1,5 @@
 package com.rbwsn.constant;
 
 public enum Role {
-    ADMIN,MEMBER,USER
+    ROLE_ADMIN,ROLE_MANAGER,ROLE_USER
 }

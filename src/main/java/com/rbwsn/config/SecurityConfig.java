@@ -1,9 +1,11 @@
 package com.rbwsn.config;
 
 import com.rbwsn.auth.SecurityDetailsService;
+import com.rbwsn.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,7 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity // Spring Security Config
+@EnableGlobalMethodSecurity(securedEnabled = true) // Secured簡単な権限設定
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
     @Autowired
     SecurityDetailsService securityDetailsService;
@@ -29,10 +35,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login") //springSecurity代わりに　認証します。
                 .defaultSuccessUrl("/")
                 .usernameParameter("email")
-                .passwordParameter("password");
+                .passwordParameter("password")
+                .and()
+                .oauth2Login()
+                .loginPage("/loginform")
+                .failureUrl("/loginform")
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService)
+        ;
 
     }
-
 
 
     @Bean

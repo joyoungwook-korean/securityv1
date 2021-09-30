@@ -1,18 +1,25 @@
 package com.rbwsn.controller;
 
+import com.rbwsn.auth.SecurityDetails;
 import com.rbwsn.dto.UserFormDto;
 import com.rbwsn.entity.User;
-import com.rbwsn.repository.UserRepository;
+
 import com.rbwsn.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
@@ -35,6 +42,8 @@ public class IndexController {
         return "index";
     }
 
+
+
     @GetMapping("/admin")
     public @ResponseBody String admin(){
         return "Hello admin";
@@ -44,8 +53,9 @@ public class IndexController {
         return "Hello manager";
     }
     @GetMapping("/user")
-    public @ResponseBody String user(){
-        return "Hello user";
+    public @ResponseBody String user(@AuthenticationPrincipal SecurityDetails securityDetails){
+        System.out.println("prin:"+ securityDetails.getUser().toString());
+        return "user";
     }
 
     @GetMapping("/createuser")
@@ -55,10 +65,11 @@ public class IndexController {
 
 
     @GetMapping("/loginform")
-    public String loginForm(Model model){
-        return "/loginform";
+    public String loginForm(){
 
+        return "/loginform";
     }
+
 
 
 
@@ -82,5 +93,11 @@ public class IndexController {
         }
 
         return "redirect:/";
+    }
+
+    @Secured("ROLE_ADMIN")  // @EnableGlobalMethodSecurity(securedEnabled = true)
+    @GetMapping(value = "/info")
+    public @ResponseBody String info(){
+        return "info";
     }
 }
