@@ -2,10 +2,13 @@ package com.rbwsn.oauth;
 
 import com.rbwsn.auth.SecurityDetails;
 import com.rbwsn.constant.Role;
-import com.rbwsn.controller.IndexController;
+
 import com.rbwsn.entity.User;
+import com.rbwsn.oauth.provider.FacebookOAuth2UserInfo;
+import com.rbwsn.oauth.provider.GoogleOAuth2UserInfo;
+import com.rbwsn.oauth.provider.OAuth2UserInfo;
 import com.rbwsn.repository.UserRepository;
-import com.rbwsn.service.UserService;
+
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,10 +19,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.RequestDispatcher;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
 
 @Service
 @Transactional
@@ -38,11 +37,24 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        String provider = userRequest.getClientRegistration().getClientId();
-        String providerId = oAuth2User.getAttribute("sub");
-        String email = oAuth2User.getAttribute("email");
-        String name = oAuth2User.getAttribute("name") + providerId;
-        String password = passwordEncoder.encode("google1234");
+        OAuth2UserInfo oAuth2UserInfo = null;
+        if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+            System.out.println("Google Login");
+            oAuth2UserInfo = new GoogleOAuth2UserInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
+            System.out.println("Facebook Login");
+            oAuth2UserInfo = new FacebookOAuth2UserInfo(oAuth2User.getAttributes());
+        } else {
+            System.out.println("null");
+        }
+
+
+        String provider = oAuth2UserInfo.getProvider();
+        String providerId = oAuth2UserInfo.getProviderId();
+        String email = oAuth2UserInfo.getEmail();
+        String name = oAuth2UserInfo.getName();
+        String password = passwordEncoder.encode("oauth1234");
+
 
         User user = userRepository.findByEmail(email);
 
@@ -57,7 +69,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .build();
             userRepository.save(user);
         }
-
 
 
         return new SecurityDetails(user, oAuth2User.getAttributes());
