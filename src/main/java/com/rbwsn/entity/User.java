@@ -2,7 +2,6 @@ package com.rbwsn.entity;
 
 import com.rbwsn.constant.Role;
 import com.rbwsn.dto.UserFormDto;
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;

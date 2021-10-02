@@ -6,6 +6,7 @@ import com.rbwsn.constant.Role;
 import com.rbwsn.entity.User;
 import com.rbwsn.oauth.provider.FacebookOAuth2UserInfo;
 import com.rbwsn.oauth.provider.GoogleOAuth2UserInfo;
+import com.rbwsn.oauth.provider.NaverOAuth2UserProvider;
 import com.rbwsn.oauth.provider.OAuth2UserInfo;
 import com.rbwsn.repository.UserRepository;
 
@@ -37,6 +38,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
+
+        System.out.println("userRequest : " + userRequest.getClientRegistration());
+        System.out.println("userRequest : " + userRequest.getAccessToken());
+        System.out.println("userRequest : " + userRequest.getAdditionalParameters());
+        System.out.println(oAuth2User.getAttributes());
+
         OAuth2UserInfo oAuth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             System.out.println("Google Login");
@@ -44,7 +51,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
             System.out.println("Facebook Login");
             oAuth2UserInfo = new FacebookOAuth2UserInfo(oAuth2User.getAttributes());
-        } else {
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            System.out.println("Naver Login");
+            oAuth2UserInfo = new NaverOAuth2UserProvider(oAuth2User.getAttribute("response"));
+
+           } else {
             System.out.println("null");
         }
 
