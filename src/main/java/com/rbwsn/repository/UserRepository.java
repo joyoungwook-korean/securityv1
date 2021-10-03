@@ -4,5 +4,7 @@ import com.rbwsn.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,Long> {
-    User findByEmail(String email); // 重複メールチェック
+    User findByEmail(String email);
+    User findByEmailAndProvider(String email,String provider);
+    User findByUsername(String user);// 重複メールチェック
 }

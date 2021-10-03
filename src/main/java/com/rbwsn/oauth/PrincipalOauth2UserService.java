@@ -4,10 +4,7 @@ import com.rbwsn.auth.SecurityDetails;
 import com.rbwsn.constant.Role;
 
 import com.rbwsn.entity.User;
-import com.rbwsn.oauth.provider.FacebookOAuth2UserInfo;
-import com.rbwsn.oauth.provider.GoogleOAuth2UserInfo;
-import com.rbwsn.oauth.provider.NaverOAuth2UserProvider;
-import com.rbwsn.oauth.provider.OAuth2UserInfo;
+import com.rbwsn.oauth.provider.*;
 import com.rbwsn.repository.UserRepository;
 
 import lombok.SneakyThrows;
@@ -19,6 +16,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 
 @Service
@@ -32,17 +31,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private PasswordEncoder passwordEncoder;
 
 
+
     @SneakyThrows
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
-
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        System.out.println("userRequest : " + userRequest.getClientRegistration());
-        System.out.println("userRequest : " + userRequest.getAccessToken());
-        System.out.println("userRequest : " + userRequest.getAdditionalParameters());
-        System.out.println(oAuth2User.getAttributes());
 
         OAuth2UserInfo oAuth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
@@ -54,10 +49,20 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
             System.out.println("Naver Login");
             oAuth2UserInfo = new NaverOAuth2UserProvider(oAuth2User.getAttribute("response"));
+        } else if(userRequest.getClientRegistration().getRegistrationId().equals("kakao")){
+            System.out.println("Kakao Login");
+            Map<String,Object> nickname = oAuth2User.getAttribute("properties");
 
-           } else {
+
+            oAuth2UserInfo = new KakaoOAuth2UserInfo(oAuth2User.getAttribute("kakao_account")
+                    ,oAuth2User.getAttribute("id").toString(),
+                    nickname);
+        }
+        else {
             System.out.println("null");
         }
+        System.out.println(oAuth2UserInfo.getProviderId());
+        System.out.println(oAuth2UserInfo.getProvider());
 
 
         String provider = oAuth2UserInfo.getProvider();
@@ -67,11 +72,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String password = passwordEncoder.encode("oauth1234");
 
 
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmailAndProvider(email,provider);
+
 
         if (user == null) {
             user = User.builder()
-                    .username(name)
+                    .username(name+providerId+provider)
                     .provider(provider)
                     .password(password)
                     .email(email)

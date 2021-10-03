@@ -19,7 +19,7 @@ public class UserService {
     }
 
     private void check_User_Email(User user){
-        User findEmail =userRepository.findByEmail(user.getEmail());
+        User findEmail =userRepository.findByEmailAndProvider(user.getEmail(),"local");
         if(findEmail!=null){
             throw new IllegalStateException("また、加入になる人です。");
         }

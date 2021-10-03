@@ -40,7 +40,9 @@ public class User {
 
     public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder){
         User user =new User();
-        user.setUsername(userFormDto.getUsername());
+        user.setProvider("local");
+        user.setProvider_id("1234");
+        user.setUsername(userFormDto.getUsername()+user.getProvider_id()+user.getProvider());
         user.setEmail(userFormDto.getEmail());
         String password = passwordEncoder.encode(userFormDto.getPassword());
         user.setPassword(password);
