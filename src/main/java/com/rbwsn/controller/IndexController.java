@@ -55,7 +55,7 @@ public class IndexController {
     @GetMapping("/user")
     public @ResponseBody String user(@AuthenticationPrincipal SecurityDetails securityDetails){
         System.out.println("prin:"+ securityDetails.getUser().toString());
-        return "user";
+        return "prin:"+ securityDetails.getUser().toString();
     }
 
     @GetMapping("/createuser")

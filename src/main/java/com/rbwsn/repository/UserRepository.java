@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<User,Long> {
     User findByEmail(String email);
     User findByEmailAndProvider(String email,String provider);
-    User findByUsername(String user);// 重複メールチェック
 }

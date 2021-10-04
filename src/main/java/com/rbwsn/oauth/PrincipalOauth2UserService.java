@@ -69,7 +69,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String providerId = oAuth2UserInfo.getProviderId();
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
-        String password = passwordEncoder.encode("oauth1234");
+        String password = passwordEncoder.encode("oauth1234"+providerId);
 
 
         User user = userRepository.findByEmailAndProvider(email,provider);
@@ -77,10 +77,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         if (user == null) {
             user = User.builder()
-                    .username(name+providerId+provider)
+                    .username(name)
                     .provider(provider)
                     .password(password)
                     .email(email)
+                    .name(name+providerId+provider)
                     .role(Role.ROLE_USER)
                     .provider_id(providerId)
                     .build();
